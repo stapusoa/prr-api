@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import { getSanityClient } from "./src/lib/cms/sanityClient";
-import { PAGE_QUERY } from "./src/lib/cms/queries";
+import { PAGE_QUERY } from "./src/lib/cms/queries/index";
 import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils";
 import { fetchProperties } from "./src/lib/cms/data/fetchProperties";
 
