@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "builds": [{ "src": "index.ts", "use": "@vercel/node" }],
+  "routes": [
+    { "src": "/page/(.*)", "dest": "index.ts" },
+    { "src": "/listings", "dest": "index.ts" }
+  ]
+}
