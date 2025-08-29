@@ -1,2 +1,2 @@
-export { PROPERTY_QUERY } from "./property"
-export { PAGE_QUERY } from "./page"
+export { PROPERTY_QUERY } from "./property.js"
+export { PAGE_QUERY } from "./page.js"

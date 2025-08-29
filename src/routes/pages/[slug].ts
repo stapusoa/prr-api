@@ -1,5 +1,5 @@
 // apps/api/src/routes/pages/[slug].ts
-import { getSanityClient } from "../../lib/cms/sanityClient";
+import { getSanityClient } from "../../lib/cms/sanityClient.js";
 import type { Request, Response } from "express"; // or your framework
 
 export default async function handler(req: Request, res: Response) {

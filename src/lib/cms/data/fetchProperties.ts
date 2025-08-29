@@ -1,4 +1,4 @@
-import { getSanityClient } from '../sanityClient'
+import { getSanityClient } from '../sanityClient.js'
 
 export async function fetchProperties() {
   const client = getSanityClient() // <— call the function to get the client

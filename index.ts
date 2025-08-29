@@ -1,10 +1,10 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { getSanityClient } from "./src/lib/cms/sanityClient";
-import { PAGE_QUERY } from "./src/lib/cms/queries/index";
-import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils";
-import { fetchProperties } from "./src/lib/cms/data/fetchProperties";
+import { getSanityClient } from "./src/lib/cms/sanityClient.js";
+import { PAGE_QUERY } from "./src/lib/cms/queries/index.js";
+import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils.js";
+import { fetchProperties } from "./src/lib/cms/data/fetchProperties.js";
 
 dotenv.config(); // Load environment variables from .env
 
