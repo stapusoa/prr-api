@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import cors from "cors"; // <--- import cors
+import cors from "cors";
 import { getSanityClient } from "./src/lib/cms/sanityClient";
 import { PAGE_QUERY } from "./src/lib/cms/queries/index";
 import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils";
