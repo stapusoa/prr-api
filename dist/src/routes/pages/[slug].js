@@ -1,5 +1,5 @@
 // apps/api/src/routes/pages/[slug].ts
-import { getSanityClient } from "../../lib/cms/sanityClient";
+import { getSanityClient } from "../../lib/cms/sanityClient.js";
 export default async function handler(req, res) {
     const { slug } = req.params; // from [slug].ts
     try {
