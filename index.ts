@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from "cors"; // <--- import cors
 import { getSanityClient } from "./src/lib/cms/sanityClient";
 import { PAGE_QUERY } from "./src/lib/cms/queries/index";
 import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils";
@@ -9,6 +10,13 @@ dotenv.config(); // Load environment variables from .env
 
 const app = express();
 
+app.use(cors({
+  origin: ["http://localhost:5173", "http://localhost:3000"],
+  methods: ["GET", "POST", "OPTIONS"],
+}));
+
+app.use(express.json());
+
 // -------- PAGE ROUTE --------
 app.get("/page/:slug", async (req: Request, res: Response) => {
   const { slug } = req.params;
@@ -17,40 +25,12 @@ app.get("/page/:slug", async (req: Request, res: Response) => {
   try {
     const page = await client.fetch(PAGE_QUERY, { slug });
 
-    if (!page) return res.status(404).send("Page not found");
+    if (!page) return res.status(404).json({ error: "Page not found" });
 
-    const ogImage = page.hero?.heroImageSM?.asset?.url ?? "";
-
-    const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <title>${page.title || ""}</title>
-        <meta name="description" content="${page.metaDescription || ""}" />
-        <link rel="canonical" href="https://plantingrootsrealty.com/${slug}" />
-        <meta property="og:title" content="${page.title || ""}" />
-        <meta property="og:description" content="${page.metaDescription || ""}" />
-        ${ogImage ? `<meta property="og:image" content="${ogImage}" />` : ""}
-      </head>
-      <body>
-        <div id="root">
-          <h1>${page.hero?.title || ""}</h1>
-          <p>${page.hero?.subheader || ""}</p>
-          <div>
-            ${page.body?.map((block: any) =>
-              block.children?.map((child: any) => child.text).join("")
-            ).join("<br>")}
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
-
-    res.send(html);
+    res.json(page);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Server error");
+    res.status(500).json({ error: "Server error" });
   }
 });
 
