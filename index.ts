@@ -10,8 +10,14 @@ dotenv.config(); // Load environment variables from .env
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173", // dev
+  "http://localhost:3000", // dev
+  process.env.FRONTEND_URL, // production (set this in your .env file)
+].filter((origin): origin is string => typeof origin === "string" && origin.length > 0);
+
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:3000"],
+  origin: allowedOrigins,
   methods: ["GET", "POST", "OPTIONS"],
 }));
 
