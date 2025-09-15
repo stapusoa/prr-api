@@ -28,9 +28,7 @@ app.use(cors({
 app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const assetsPath = process.env.VERCEL
-    ? path.join(process.cwd(), 'public', 'assets') // production
-    : path.join(__dirname, '../public/assets'); // local
+const assetsPath = path.join(__dirname, '../public/assets');
 app.use('/assets', express.static(assetsPath));
 // -------- PAGE ROUTE --------
 app.get("/page/:slug", async (req, res) => {
