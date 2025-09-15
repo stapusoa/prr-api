@@ -7,7 +7,7 @@ import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils.js"
 import { fetchProperties } from "./src/lib/cms/data/fetchProperties.js"
 import { fileURLToPath } from "url"
 import path from "path"
-
+import siteSettingsRouter from "./src/routes/siteSettings"
 dotenv.config()
 
 const app = express()
@@ -36,6 +36,8 @@ const __dirname = path.dirname(__filename)
 
 const assetsPath = path.join(__dirname, 'public', 'assets') // use __dirname only
 app.use('/assets', express.static(assetsPath))
+
+app.use("/api", siteSettingsRouter)
 
 // -------- PAGE ROUTE --------
 app.get("/page/:slug", async (req: Request, res: Response) => {
