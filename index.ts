@@ -5,20 +5,21 @@ import { getSanityClient } from "./src/lib/cms/sanityClient.js"
 import { PAGE_QUERY } from "./src/lib/cms/queries/index.js"
 import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils.js"
 import { fetchProperties } from "./src/lib/cms/data/fetchProperties.js"
+import { fileURLToPath } from "url"
+import path from "path"
 
-dotenv.config() // Load environment variables from .env
+dotenv.config()
 
 const app = express()
 
 const allowedOrigins = [
-  "http://localhost:5173", // dev
-  "http://localhost:3000", // dev
-  process.env.FRONTEND_URL, // production (set this in your .env file)
+  "http://localhost:5173",
+  "http://localhost:3000",
+  process.env.FRONTEND_URL,
 ].filter((origin): origin is string => typeof origin === "string" && origin.length > 0)
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true)
     if (allowedOrigins.includes(origin)) {
       return callback(null, true)
@@ -46,6 +47,12 @@ app.get("/page/:slug", async (req: Request, res: Response) => {
     res.status(500).json({ error: "Server error" })
   }
 })
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// Serve all static assets
+app.use('/assets', express.static(path.join(__dirname, '../public/assets')))
 
 // -------- LISTINGS ROUTE --------
 app.get("/listings", async (req: Request, res: Response) => {

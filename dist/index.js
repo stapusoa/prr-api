@@ -5,15 +5,24 @@ import { getSanityClient } from "./src/lib/cms/sanityClient.js";
 import { PAGE_QUERY } from "./src/lib/cms/queries/index.js";
 import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils.js";
 import { fetchProperties } from "./src/lib/cms/data/fetchProperties.js";
-dotenv.config(); // Load environment variables from .env
+import { fileURLToPath } from "url";
+import path from "path";
+dotenv.config();
 const app = express();
 const allowedOrigins = [
-    "http://localhost:5173", // dev
-    "http://localhost:3000", // dev
-    process.env.FRONTEND_URL, // production (set this in your .env file)
+    "http://localhost:5173",
+    "http://localhost:3000",
+    process.env.FRONTEND_URL,
 ].filter((origin) => typeof origin === "string" && origin.length > 0);
 app.use(cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+        if (!origin)
+            return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
+    },
     methods: ["GET", "POST", "OPTIONS"],
 }));
 app.use(express.json());
@@ -32,6 +41,10 @@ app.get("/page/:slug", async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// Serve all static assets
+app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 // -------- LISTINGS ROUTE --------
 app.get("/listings", async (req, res) => {
     try {
