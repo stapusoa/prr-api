@@ -52,7 +52,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Serve all static assets
-app.use('/assets', express.static(path.join(__dirname, '../public/assets')))
+app.use('/assets', express.static(path.join(process.cwd(), '../public/assets')))
 
 // -------- LISTINGS ROUTE --------
 app.get("/listings", async (req: Request, res: Response) => {
