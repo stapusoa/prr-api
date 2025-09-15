@@ -26,6 +26,12 @@ app.use(cors({
     methods: ["GET", "POST", "OPTIONS"],
 }));
 app.use(express.json());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const assetsPath = process.env.VERCEL
+    ? path.join(process.cwd(), 'public', 'assets') // production
+    : path.join(__dirname, '../public/assets'); // local
+app.use('/assets', express.static(assetsPath));
 // -------- PAGE ROUTE --------
 app.get("/page/:slug", async (req, res) => {
     const { slug } = req.params;
@@ -41,10 +47,6 @@ app.get("/page/:slug", async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// Serve all static assets
-app.use('/assets', express.static(path.join(__dirname, '../public/assets')));
 // -------- LISTINGS ROUTE --------
 app.get("/listings", async (req, res) => {
     try {
