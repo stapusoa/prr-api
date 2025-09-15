@@ -29,8 +29,8 @@ app.use(cors({
 app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const assetsPath = path.join(__dirname, 'public', 'assets'); // use __dirname only
-app.use('/assets', express.static(assetsPath));
+const assetsPath = path.join(__dirname, "../assets");
+app.use("/assets", express.static(assetsPath));
 app.use("/api", siteSettingsRouter);
 // -------- PAGE ROUTE --------
 app.get("/page/:slug", async (req, res) => {
