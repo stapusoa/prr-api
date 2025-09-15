@@ -8,6 +8,7 @@ import { fetchProperties } from "./src/lib/cms/data/fetchProperties.js"
 import { fileURLToPath } from "url"
 import path from "path"
 import siteSettingsRouter from "./src/routes/siteSettings.js"
+
 dotenv.config()
 
 const app = express()
