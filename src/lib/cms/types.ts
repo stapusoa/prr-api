@@ -49,3 +49,15 @@ export type Page = {
       }
   >;
 };
+
+export type ImageBlock = {
+  _type: "imageBlock"
+  alt?: string
+  alignment?: "left" | "center" | "right"
+  asset: { _ref: string; url?: string }
+}
+
+export type PageContentBlock = {
+  _type: "textBlock" | "imageBlock" | "heroBlock"
+  // other fields
+}

@@ -4,5 +4,6 @@
   "routes": [
     { "src": "/page/(.*)", "dest": "index.ts" },
     { "src": "/listings", "dest": "index.ts" }
-  ]
+  ],
+  "rewrites": [{ "source": "/assets/(.*)", "destination": "/public/assets/$1" }]
 }
