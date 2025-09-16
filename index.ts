@@ -1,13 +1,12 @@
 import express, { Request, Response } from "express"
 import dotenv from "dotenv"
 import cors from "cors"
+import path from "path"
+import { fileURLToPath } from "url"
 import { getSanityClient } from "./src/lib/cms/sanityClient.js"
 import { PAGE_QUERY } from "./src/lib/cms/queries/index.js"
 import { getFilteredListings } from "./src/lib/cms/utils/propertyUtils.js"
 import { fetchProperties } from "./src/lib/cms/data/fetchProperties.js"
-import { fileURLToPath } from "url"
-import path from "path"
-import siteSettingsRouter from "./src/routes/siteSettings.js"
 
 dotenv.config()
 
@@ -35,10 +34,9 @@ app.use(express.json())
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const assetsPath = path.join(__dirname, "../assets")
+// ----- Static Assets -----
+const assetsPath = path.join(process.cwd(), "assets")
 app.use("/assets", express.static(assetsPath))
-
-app.use("/api", siteSettingsRouter)
 
 // -------- PAGE ROUTE --------
 app.get("/page/:slug", async (req: Request, res: Response) => {
@@ -82,3 +80,5 @@ app.get("/listings", async (req: Request, res: Response) => {
 // -------- START SERVER --------
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`))
+
+export default app

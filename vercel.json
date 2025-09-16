@@ -1,9 +1,15 @@
 {
   "version": 2,
-  "builds": [{ "src": "index.ts", "use": "@vercel/node" }],
+  "builds": [
+    {
+      "src": "index.ts",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     { "src": "/page/(.*)", "dest": "index.ts" },
-    { "src": "/listings", "dest": "index.ts" }
-  ],
-  "rewrites": [{ "source": "/assets/(.*)", "destination": "/public/assets/$1" }]
+    { "src": "/listings", "dest": "index.ts" },
+    { "src": "/api/(.*)", "dest": "index.ts" },
+    { "src": "/assets/(.*)", "dest": "index.ts" }
+  ]
 }
